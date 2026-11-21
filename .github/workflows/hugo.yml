@@ -34,9 +34,6 @@ jobs:
           hugo-version: '0.164.0'
           extended: true
 
-      - name: Install Dart Sass
-        run: sudo snap install dart-sass
-
       - name: Build with Hugo
         run: hugo --minify --environment production --cleanDestinationDir
 
