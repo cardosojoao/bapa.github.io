@@ -1,10 +1,10 @@
 [en]
     label  = "English"
-    title  = "Hugo Theme Stack"
+    title  = "Bapa"
     weight = 1
 
     [en.params.sidebar]
-        subtitle = "Card-style Hugo theme designed for bloggers"
+        subtitle = "ZX Spectrum Next game development, dot8, and Tidal Quest."
 
 [zh]
     label  = "简体中文"

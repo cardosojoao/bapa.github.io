@@ -7,7 +7,7 @@ favicon        = "img/avatar.png"
 
 [sidebar]
     emoji    = "✏️"
-    subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    subtitle = "ZX Spectrum Next game development, dot8, and Tidal Quest."
     avatar   = "img/avatar.png"
 
 [article]
@@ -25,9 +25,9 @@ favicon        = "img/avatar.png"
     page     = [{ type = "toc" }]
 
 [comments]
-    # See complete configuration in config/_default/params.toml
-    enabled  = true
-    provider = "disqus"
+    # Enable after configuring your own comment provider.
+    enabled  = false
+    provider = ""
 
 # GDPR Cookie Consent Configuration
 # When enabled, analytics and functional cookies require user consent

@@ -1,4 +1,14 @@
 baseURL = "https://bapa.one/"
-languageCode = "en-us"
+locale = "en-us"
 title = "Bapa"
 theme = "hugo-theme-stack"
+defaultContentLanguage = "en"
+disableLanguages = ["zh", "zh-hant-tw", "ja"]
+hasCJKLanguage = false
+
+[pagination]
+    pagerSize = 3
+
+[permalinks]
+    post = "/p/:slug/"
+    page = "/:slug/"

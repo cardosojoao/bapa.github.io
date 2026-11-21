@@ -1,6 +1,7 @@
 name: Deploy Hugo
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -30,14 +31,14 @@ jobs:
 
       - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: latest
+          hugo-version: '0.164.0'
           extended: true
 
       - name: Install Dart Sass
         run: sudo snap install dart-sass
 
       - name: Build with Hugo
-        run: hugo --minify --environment production
+        run: hugo --minify --environment production --cleanDestinationDir
 
       - uses: actions/configure-pages@v5
 
