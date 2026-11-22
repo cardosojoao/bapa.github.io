@@ -1,6 +1,14 @@
 # Stack theme setup for bapa.one
 
-This repository already contains Hugo Theme Stack as a Git submodule. Keep the existing repository and articles; a new Hugo site is not needed.
+This repository contains Hugo Theme Stack as regular files in `themes/hugo-theme-stack`. Keep the existing repository and articles; a new Hugo site is not needed. No Git submodule setup is required.
+
+For an existing checkout that still tracks the theme as a submodule, run the one-time conversion from a local PowerShell session:
+
+```powershell
+.\scripts\Convert-StackTheme.ps1
+```
+
+This keeps the current theme files and stages them with the workflow and guide updates. Review the staged changes, then commit and push to publish the conversion. The old submodule history under `.git/modules` is left in place.
 
 ## 1. Prepare the site
 
@@ -9,17 +17,16 @@ Install Hugo Extended (this project is tested with version 0.164.0) and Git. In 
 ```powershell
 Set-Location D:\devl\site\bapa
 hugo version
-git submodule update --init --recursive
 ```
 
 For a new checkout on another computer:
 
 ```powershell
-git clone --recurse-submodules https://github.com/cardosojoao/bapa.git
+git clone https://github.com/cardosojoao/bapa.git
 Set-Location bapa
 ```
 
-Do not run `hugo new site` inside this existing site or add the same theme submodule again.
+Do not run `hugo new site` inside this existing site or add the theme as a submodule.
 
 ## 2. Configure the theme
 
@@ -44,7 +51,7 @@ defaultContentLanguage = "en"
 
 Edit the split configuration under `config/_default`. The unused configuration copies in the project root have been removed.
 
-Keep theme customizations in the site's own configuration, assets, and layouts so that theme updates do not overwrite them. Comments are disabled until you configure your own provider. The site uses English only; translated demo content, the sample Links page, and the Documentation demo category have been removed. The About page at `content/page/about/index.md` introduces the author and the projects behind bapa.one. The upstream Stack submodule remains intact for reproducible checkouts and updates.
+Keep theme customizations in the site's own configuration, assets, and layouts so that theme updates do not overwrite them. Comments are disabled until you configure your own provider. The site uses English only; translated demo content, the sample Links page, and the Documentation demo category have been removed. The About page at `content/page/about/index.md` introduces the author and the projects behind bapa.one. The theme files are versioned directly in this repository, including the upstream license. Theme updates must be applied manually and reviewed against the local cleanup and customizations.
 
 ## 3. Preview locally
 
