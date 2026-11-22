@@ -3,7 +3,6 @@ locale = "en-us"
 title = "Bapa"
 theme = "hugo-theme-stack"
 defaultContentLanguage = "en"
-disableLanguages = ["zh", "zh-hant-tw", "ja"]
 hasCJKLanguage = false
 
 [pagination]

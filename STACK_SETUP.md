@@ -30,7 +30,7 @@ Do not run `hugo new site` inside this existing site or add the same theme submo
 | `config/_default/params.toml` | Avatar, widgets, article settings, and comments |
 | `config/_default/menu.toml` | Social links |
 | `config/_default/markup.toml` | Markdown and code highlighting |
-| `assets/scss/custom.scss` | Your custom styles |
+| `assets/scss/custom.scss` (optional) | Create this file to add custom styles |
 
 The main settings are:
 
@@ -40,12 +40,11 @@ locale = "en-us"
 title = "Bapa"
 theme = "hugo-theme-stack"
 defaultContentLanguage = "en"
-disableLanguages = ["zh", "zh-hant-tw", "ja"]
 ```
 
-Edit the configuration under `config/_default`, rather than the extra copies named `languages.toml`, `params.toml`, and `menu.toml` in the project root. Hugo's split configuration uses the files under `config/_default`.
+Edit the split configuration under `config/_default`. The unused configuration copies in the project root have been removed.
 
-Keep theme customizations in the site's own configuration, assets, and layouts so that theme updates do not overwrite them. Comments are disabled until you configure your own provider. The translated content files remain available, but their languages are disabled.
+Keep theme customizations in the site's own configuration, assets, and layouts so that theme updates do not overwrite them. Comments are disabled until you configure your own provider. The site uses English only; translated demo content, the sample Links page, and the Documentation demo category have been removed. The About page at `content/page/about/index.md` introduces the author and the projects behind bapa.one. The upstream Stack submodule remains intact for reproducible checkouts and updates.
 
 ## 3. Preview locally
 
@@ -70,6 +69,8 @@ hugo --minify --environment production --cleanDestinationDir
 ```
 
 This writes the site to `public`. That directory is generated output: keep original content and images under `content` or `assets`. The clean destination option removes old output that no longer belongs to the current site.
+
+The `.gitignore` excludes newly generated output and caches. Files already tracked in Git remain tracked until they are explicitly removed from the Git index.
 
 ## 6. Configure GitHub Pages
 

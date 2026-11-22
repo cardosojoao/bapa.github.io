@@ -1,712 +1,154 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Managing Function Calls Across Paged Memory on the Spectrum Next.">
-<title>function call page memory auto mapping</title>
-
-
-<link rel="canonical" href="http://localhost:1313/p/proxy_call/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
-
-
-<link rel="stylesheet" href="/scss/style.min.59c5eb617b2b83358d0baf163162325d5249a2be44239b430beb29a87c1ddbe4.css"><meta property='og:title' content="function call page memory auto mapping">
-<meta property='og:description' content="Managing Function Calls Across Paged Memory on the Spectrum Next.">
-<meta property='og:url' content='http://localhost:1313/p/proxy_call/'>
-<meta property='og:site_name' content='Bapa'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='development' /><meta property='article:published_time' content='2025-10-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-10-30T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/proxy_call/cover_proxy_call.jpg' />
-<meta name="twitter:title" content="function call page memory auto mapping">
-<meta name="twitter:description" content="Managing Function Calls Across Paged Memory on the Spectrum Next."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='http://localhost:1313/p/proxy_call/cover_proxy_call.jpg' />
-    <link rel="shortcut icon" href="/img/avatar.png" />
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        <figure class="site-avatar">
-                <a href="/">
-                    <img src="/img/avatar.png" 
-                        width="150"
-                        height="150"
-                        class="site-logo"
-                        loading="lazy"
-                        alt="Avatar">
-                </a>
-                
-                    <span class="emoji">✏️</span>
-                
-            </figure>
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">Bapa</a></h1>
-            <h2 class="site-description">ZX Spectrum Next game development, dot8, and Tidal Quest.</h2>
-        </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a 
-                        href='https://github.com/cardosojoao'
-                        
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>Home</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/about/' >
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>Archives</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>Search</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/links/' >
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>Links</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>Dark Mode</span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
-</aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
-        
-        <div class="widget--toc">
-            <nav class="toc-nav" id="TableOfContents">
-                
-  <ol>
-    <li><a href="#address-structure">Address Structure</a></li>
-    <li><a href="#function-definition-example">Function definition example</a></li>
-    <li><a href="#example-call">Example Call</a></li>
-    <li><a href="#the-proxycall-routine">The ProxyCall Routine</a></li>
-    <li><a href="#example-of-equivalent-inline-bank-switch">Example of Equivalent Inline Bank Switch</a></li>
-    <li><a href="#performance-notes">Performance Notes</a></li>
-    <li><a href="#closing-thoughts">Closing Thoughts</a></li>
-  </ol>
-
-            </nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="has-image main-article">
-    <header class="article-header">
-    <div class="article-image">
-        <a href="/p/proxy_call/">
-            <img alt="Featured image of post function call page memory auto mapping" height="1024" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/proxy_call/cover_proxy_call.jpg" srcset="/p/proxy_call/cover_proxy_call_hu_e2142082c87d7b14.jpg 800w, /p/proxy_call/cover_proxy_call.jpg 1024w" width="1024">
-        </a>
-    </div>
-    
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            
-            
-            
-            <a href="/categories/general/" style="background-color: hsl(131, 60%, 84%); color: hsl(131, 60%, 15%);">
-                General
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/p/proxy_call/">function call page memory auto mapping</a>
-        </h2>
-    
-        
-        <h3 class="article-subtitle">
-            Managing Function Calls Across Paged Memory on the Spectrum Next.
-        </h3>
-        
-    </div>
-
-    
-    
-    
-    
-    
-    
-    
-    <footer class="article-meta">
-        
-            <div class="inline-meta">
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                    <time class="article-time--published" datetime='2025-10-30T00:00:00Z'>Thursday, October 30, 2025</time>
-                
-
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                    <time class="article-time--reading">
-                        4 minutes read
-                    </time>
-                
-            </div>
-        
-
-        
-
-        
-    </footer>
-    
-</div>
-
-</header>
-
-    
-    <aside class="article-toc">
-        <details>
-            <summary>
-                <div class="article-toc-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
-                    <span>Table of contents</span>
-                </div>
-            </summary>
-            <nav class="toc-nav">
-                
-  <ol>
-    <li><a href="#address-structure">Address Structure</a></li>
-    <li><a href="#function-definition-example">Function definition example</a></li>
-    <li><a href="#example-call">Example Call</a></li>
-    <li><a href="#the-proxycall-routine">The ProxyCall Routine</a></li>
-    <li><a href="#example-of-equivalent-inline-bank-switch">Example of Equivalent Inline Bank Switch</a></li>
-    <li><a href="#performance-notes">Performance Notes</a></li>
-    <li><a href="#closing-thoughts">Closing Thoughts</a></li>
-  </ol>
-
-            </nav>
-        </details>
-    </aside>
-    
-
-    <section class="article-content">
-    
-    
-    <p>During the resolution of my core engine growing beyond 8 KB, I analyzed the impact of splitting the engine into multiple functional blocks — for example, physics, render, and input. While exploring that approach, I also considered allowing the engine core to page itself in and out, dynamically loading the needed memory bank before calling a specific function. Although that design was later dropped, I decided to keep the prototype paging routine for a similar purpose.</p>
-<p>The goal is to call functions that may reside in different memory pages, automatically page in the required 8 KB block, execute the function, and then restore the previous mapping. This approach allows managing up to eight 8 KB pages (64 KB total), each mapped into bank #0 as needed.</p>
-<h2 id="address-structure">Address Structure
-</h2><p>As mentioned in a previous article, the Z80 address bus is 16-bit, which allows addressing 64 KB at once. To identify both the memory page and the function address, we can split the 16-bit address this way:</p>
-<div class="table-wrapper"><table>
-	<thead>
-			<tr>
-					<th>Bits</th>
-					<th>Meaning</th>
-					<th>Range</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>15–13</td>
-					<td>Page index</td>
-					<td>0 – 7</td>
-			</tr>
-			<tr>
-					<td>12–0</td>
-					<td>Function address</td>
-					<td>0 – 8191</td>
-			</tr>
-	</tbody>
-</table></div>
-<p>Each 8 KB page contains 8192 bytes (2¹³), so the top 3 bits of a 16-bit value can define which page to load, and the lower 13 bits specify the address within that page.</p>
-<p>This means functions must be compiled to execute in bank #0, since only that slot is dynamically paged.</p>
-<h2 id="function-definition-example">Function definition example
-</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mmu $0000, DEBUG_BANK
-</span></span><span class="line"><span class="cl">    org $0000
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">@Proxy_Show_Collider equ  (Proxy_Bank&lt;&lt;13)+Debug_Show_Collider
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Debug_Show_Collider:
-</span></span><span class="line"><span class="cl">    ld    hl, Collider_Active_Cache
-</span></span><span class="line"><span class="cl">.Loop:
-</span></span><span class="line"><span class="cl">    ld    a, (hl)
-</span></span><span class="line"><span class="cl">    ld    iyl, a
-</span></span><span class="line"><span class="cl">    inc   hl
-</span></span><span class="line"><span class="cl">    ld    a, (hl) 
-</span></span><span class="line"><span class="cl">    inc   hl
-</span></span><span class="line"><span class="cl">    ld    iyh, a
-</span></span><span class="line"><span class="cl">    or    iyl
-</span></span><span class="line"><span class="cl">    ret   z
-</span></span><span class="line"><span class="cl">    push  hl
-</span></span><span class="line"><span class="cl">    call  Debug.DrawCollider
-</span></span><span class="line"><span class="cl">    pop   hl
-</span></span><span class="line"><span class="cl">    jr    .Loop
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The function itself isn’t important — what matters is the structure. The label @Proxy_Show_Collider follows the defined format: top 3 bits = page index, remaining 13 bits = function address.</p>
-<h2 id="example-call">Example Call
-</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    call  ProxyCall
-</span></span><span class="line"><span class="cl">    dw    @Proxy_Show_Collider
-</span></span><span class="line"><span class="cl">    call  CleanData
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>The ProxyCall routine interprets the function pointer, pages in the correct page into bank #0, calls the target function, and restores the previous page afterward.</p>
-<h2 id="the-proxycall-routine">The ProxyCall Routine
-</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">;------------------------------------------------------------
-</span></span><span class="line"><span class="cl">; ProxyCall
-</span></span><span class="line"><span class="cl">; Dynamically pages in the target bank and calls its function
-</span></span><span class="line"><span class="cl">;------------------------------------------------------------
-</span></span><span class="line"><span class="cl">;
-</span></span><span class="line"><span class="cl">; Expected:
-</span></span><span class="line"><span class="cl">;   (SP) → proxy call function address (ppp aaaaaaaaaaaaa)
-</span></span><span class="line"><span class="cl">;           p = page 0..7, a = 0..8191
-</span></span><span class="line"><span class="cl">;
-</span></span><span class="line"><span class="cl">ProxyCall:
-</span></span><span class="line"><span class="cl">    pop   hl
-</span></span><span class="line"><span class="cl">    ld    e, (hl)
-</span></span><span class="line"><span class="cl">    inc   hl
-</span></span><span class="line"><span class="cl">    ld    d, (hl)
-</span></span><span class="line"><span class="cl">    inc   hl
-</span></span><span class="line"><span class="cl">    push  hl 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>We use a call instruction to reach this routine, so the next instruction’s address (the return address) is already on the stack, by popping it into HL, reading the following word into DE, and pushing HL back, we obtain the target function address while preserving the return address.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    ld    hl, (SLOT_0000)
-</span></span><span class="line"><span class="cl">    push  hl                
-</span></span><span class="line"><span class="cl">    push  af
-</span></span><span class="line"><span class="cl">    ex    de, hl
-</span></span><span class="line"><span class="cl">    ld    a, h
-</span></span><span class="line"><span class="cl">    add   a, a
-</span></span><span class="line"><span class="cl">    adc   a, a
-</span></span><span class="line"><span class="cl">    adc   a, a
-</span></span><span class="line"><span class="cl">    adc   a, a
-</span></span><span class="line"><span class="cl">    and   %00000111
-</span></span><span class="line"><span class="cl">    add   PROXY_BASE_BANK
-</span></span><span class="line"><span class="cl">    call  setbank0000_8k
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Here we store the current page in use by bank #0, preserve register A, extract the page index from the top bits of H, and map the corresponding page.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    ld    a, h
-</span></span><span class="line"><span class="cl">    and   %00011111
-</span></span><span class="line"><span class="cl">    ld    h, a
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>his ensures that only the lower 13 bits of HL remain — the actual function address.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    pop   af
-</span></span><span class="line"><span class="cl">    call  Call_hl
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>After restoring register A, we call Call_hl, which is a simple jp (hl) — effectively acting as a call (hl) pseudo-opcode.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    pop   hl
-</span></span><span class="line"><span class="cl">    jp    setbanks0000_hl
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Finally, we restore the original bank to slot #0 and return execution to the next instruction (call CleanData in the example).</p>
-<h2 id="example-of-equivalent-inline-bank-switch">Example of Equivalent Inline Bank Switch
-</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    ld    a, (SLOT_0000)
-</span></span><span class="line"><span class="cl">    push  af
-</span></span><span class="line"><span class="cl">    ld    a, $00
-</span></span><span class="line"><span class="cl">    call  setbank0000_8k
-</span></span><span class="line"><span class="cl">    ;
-</span></span><span class="line"><span class="cl">    ; routine code
-</span></span><span class="line"><span class="cl">    ;
-</span></span><span class="line"><span class="cl">    pop   af
-</span></span><span class="line"><span class="cl">    call  setbank0000_8k
-</span></span><span class="line"><span class="cl">    ret
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="performance-notes">Performance Notes
-</h2><div class="table-wrapper"><table>
-	<thead>
-			<tr>
-					<th>Call Type</th>
-					<th>Size</th>
-					<th>T-States</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>ProxyCall</td>
-					<td>31 bytes</td>
-					<td>167 t-states</td>
-			</tr>
-			<tr>
-					<td>Regular call</td>
-					<td>14 bytes</td>
-					<td>85 t-states</td>
-			</tr>
-	</tbody>
-</table></div>
-<p>The proxy adds roughly 82 extra t-states but saves 11 bytes per function, which is a reasonable trade-off for infrequently called routines.</p>
-<hr>
-<h2 id="closing-thoughts">Closing Thoughts
-</h2><p>This proxy-based approach adds flexibility for managing large engines that exceed 8 KB while keeping the main memory footprint small. Although not ideal for performance-critical routines, it’s a clean and modular way to access code spread across multiple pages — an elegant solution for large Z80 projects like the Spectrum Next.</p>
-
-</section>
-
-
-    <footer class="article-meta article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/development/">Development</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright inline-meta">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under <a class="link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"  target="_blank" rel="noopener"
-    >CC BY-NC-SA 4.0</a></span>
-    </section>
-    </footer>
-
-
-    
-</article>
-
-    
-
-    
-
-<aside>
-    <h2 class="section-title">Related content</h2>
-    <div class="subsection-list">
-        <div class="article-list--tile">
-            
-                
-<article class="has-image">
-    <a href="/p/development-environment/">
-        
-        <div class="article-image">
-            <img alt="Featured image of post My developmen environment" height="150" loading="lazy" src="/p/development-environment/cover_hu_a665bbe4f62dead6.jpg" srcset="/p/development-environment/cover_hu_a665bbe4f62dead6.jpg 1x, /p/development-environment/cover_hu_8ae62c66b664abb9.jpg 2x" width="250">
-
-        </div>
-        
-
-        <div class="article-details"style="background: linear-gradient(0deg, #b4a54c80 0%, #0d264aC0 100%);">
-            <h2 class="article-title">My developmen environment</h2>
-        </div>
-    </a>
-</article>
-            
-        </div>
-    </div>
-</aside>
-
-     
-    
-        
-
-
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-            2020 - 
-        
-        2026 Bapa
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="4.0.3">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
-
-
-    
-
-
-
-<script type="module">
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Managing Function Calls Across Paged Memory on the Spectrum Next."><title>function call page memory auto mapping</title><link rel=canonical href=https://bapa.one/p/proxy_call/><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href=/scss/style.min.59c5eb617b2b83358d0baf163162325d5249a2be44239b430beb29a87c1ddbe4.css><meta property='og:title' content="function call page memory auto mapping"><meta property='og:description' content="Managing Function Calls Across Paged Memory on the Spectrum Next."><meta property='og:url' content='https://bapa.one/p/proxy_call/'><meta property='og:site_name' content='Bapa'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='development'><meta property='article:published_time' content='2025-10-30T00:00:00+00:00'><meta property='article:modified_time' content='2025-10-30T00:00:00+00:00'><meta property='og:image' content='https://bapa.one/p/proxy_call/cover_proxy_call.jpg'><meta name=twitter:title content="function call page memory auto mapping"><meta name=twitter:description content="Managing Function Calls Across Paged Memory on the Spectrum Next."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://bapa.one/p/proxy_call/cover_proxy_call.jpg'><link rel="shortcut icon" href=/img/avatar.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar.png width=150 height=150 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Bapa</a></h1><h2 class=site-description>ZX Spectrum Next game development, dot8, and Tidal Quest.</h2></div></header><ol class=menu-social><li><a href=https://github.com/cardosojoao title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav class=toc-nav id=TableOfContents><ol><li><a href=#address-structure>Address Structure</a></li><li><a href=#function-definition-example>Function definition example</a></li><li><a href=#example-call>Example Call</a></li><li><a href=#the-proxycall-routine>The ProxyCall Routine</a></li><li><a href=#example-of-equivalent-inline-bank-switch>Example of Equivalent Inline Bank Switch</a></li><li><a href=#performance-notes>Performance Notes</a></li><li><a href=#closing-thoughts>Closing Thoughts</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/proxy_call/><img alt="Featured image of post function call page memory auto mapping" height=1024 loading=lazy sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src=/p/proxy_call/cover_proxy_call.jpg srcset="/p/proxy_call/cover_proxy_call_hu_e2142082c87d7b14.jpg 800w, /p/proxy_call/cover_proxy_call.jpg 1024w" width=1024></a></div><div class=article-details><header class=article-category><a href=/categories/general/ style=background-color:#beefc7;color:#0f3d18>General</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/proxy_call/>function call page memory auto mapping</a></h2><h3 class=article-subtitle>Managing Function Calls Across Paged Memory on the Spectrum Next.</h3></div><footer class=article-meta><div class=inline-meta><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2025-10-30T00:00:00Z>Thursday, October 30, 2025</time>
+<svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>4 minutes read</time></div></footer></div></header><aside class=article-toc><details><summary><div class=article-toc-title><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6-6 6"/></svg>
+<span>Table of contents</span></div></summary><nav class=toc-nav><ol><li><a href=#address-structure>Address Structure</a></li><li><a href=#function-definition-example>Function definition example</a></li><li><a href=#example-call>Example Call</a></li><li><a href=#the-proxycall-routine>The ProxyCall Routine</a></li><li><a href=#example-of-equivalent-inline-bank-switch>Example of Equivalent Inline Bank Switch</a></li><li><a href=#performance-notes>Performance Notes</a></li><li><a href=#closing-thoughts>Closing Thoughts</a></li></ol></nav></details></aside><section class=article-content><p>During the resolution of my core engine growing beyond 8 KB, I analyzed the impact of splitting the engine into multiple functional blocks — for example, physics, render, and input. While exploring that approach, I also considered allowing the engine core to page itself in and out, dynamically loading the needed memory bank before calling a specific function. Although that design was later dropped, I decided to keep the prototype paging routine for a similar purpose.</p><p>The goal is to call functions that may reside in different memory pages, automatically page in the required 8 KB block, execute the function, and then restore the previous mapping. This approach allows managing up to eight 8 KB pages (64 KB total), each mapped into bank #0 as needed.</p><h2 id=address-structure>Address Structure</h2><p>As mentioned in a previous article, the Z80 address bus is 16-bit, which allows addressing 64 KB at once. To identify both the memory page and the function address, we can split the 16-bit address this way:</p><div class=table-wrapper><table><thead><tr><th>Bits</th><th>Meaning</th><th>Range</th></tr></thead><tbody><tr><td>15–13</td><td>Page index</td><td>0 – 7</td></tr><tr><td>12–0</td><td>Function address</td><td>0 – 8191</td></tr></tbody></table></div><p>Each 8 KB page contains 8192 bytes (2¹³), so the top 3 bits of a 16-bit value can define which page to load, and the lower 13 bits specify the address within that page.</p><p>This means functions must be compiled to execute in bank #0, since only that slot is dynamically paged.</p><h2 id=function-definition-example>Function definition example</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>mmu $0000, DEBUG_BANK
+</span></span><span class=line><span class=cl>    org $0000
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>@Proxy_Show_Collider equ  (Proxy_Bank&lt;&lt;13)+Debug_Show_Collider
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Debug_Show_Collider:
+</span></span><span class=line><span class=cl>    ld    hl, Collider_Active_Cache
+</span></span><span class=line><span class=cl>.Loop:
+</span></span><span class=line><span class=cl>    ld    a, (hl)
+</span></span><span class=line><span class=cl>    ld    iyl, a
+</span></span><span class=line><span class=cl>    inc   hl
+</span></span><span class=line><span class=cl>    ld    a, (hl) 
+</span></span><span class=line><span class=cl>    inc   hl
+</span></span><span class=line><span class=cl>    ld    iyh, a
+</span></span><span class=line><span class=cl>    or    iyl
+</span></span><span class=line><span class=cl>    ret   z
+</span></span><span class=line><span class=cl>    push  hl
+</span></span><span class=line><span class=cl>    call  Debug.DrawCollider
+</span></span><span class=line><span class=cl>    pop   hl
+</span></span><span class=line><span class=cl>    jr    .Loop
+</span></span></code></pre></td></tr></table></div></div><p>The function itself isn’t important — what matters is the structure. The label @Proxy_Show_Collider follows the defined format: top 3 bits = page index, remaining 13 bits = function address.</p><h2 id=example-call>Example Call</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    call  ProxyCall
+</span></span><span class=line><span class=cl>    dw    @Proxy_Show_Collider
+</span></span><span class=line><span class=cl>    call  CleanData
+</span></span></code></pre></td></tr></table></div></div><p>The ProxyCall routine interprets the function pointer, pages in the correct page into bank #0, calls the target function, and restores the previous page afterward.</p><h2 id=the-proxycall-routine>The ProxyCall Routine</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>;------------------------------------------------------------
+</span></span><span class=line><span class=cl>; ProxyCall
+</span></span><span class=line><span class=cl>; Dynamically pages in the target bank and calls its function
+</span></span><span class=line><span class=cl>;------------------------------------------------------------
+</span></span><span class=line><span class=cl>;
+</span></span><span class=line><span class=cl>; Expected:
+</span></span><span class=line><span class=cl>;   (SP) → proxy call function address (ppp aaaaaaaaaaaaa)
+</span></span><span class=line><span class=cl>;           p = page 0..7, a = 0..8191
+</span></span><span class=line><span class=cl>;
+</span></span><span class=line><span class=cl>ProxyCall:
+</span></span><span class=line><span class=cl>    pop   hl
+</span></span><span class=line><span class=cl>    ld    e, (hl)
+</span></span><span class=line><span class=cl>    inc   hl
+</span></span><span class=line><span class=cl>    ld    d, (hl)
+</span></span><span class=line><span class=cl>    inc   hl
+</span></span><span class=line><span class=cl>    push  hl 
+</span></span></code></pre></td></tr></table></div></div><p>We use a call instruction to reach this routine, so the next instruction’s address (the return address) is already on the stack, by popping it into HL, reading the following word into DE, and pushing HL back, we obtain the target function address while preserving the return address.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    ld    hl, (SLOT_0000)
+</span></span><span class=line><span class=cl>    push  hl                
+</span></span><span class=line><span class=cl>    push  af
+</span></span><span class=line><span class=cl>    ex    de, hl
+</span></span><span class=line><span class=cl>    ld    a, h
+</span></span><span class=line><span class=cl>    add   a, a
+</span></span><span class=line><span class=cl>    adc   a, a
+</span></span><span class=line><span class=cl>    adc   a, a
+</span></span><span class=line><span class=cl>    adc   a, a
+</span></span><span class=line><span class=cl>    and   %00000111
+</span></span><span class=line><span class=cl>    add   PROXY_BASE_BANK
+</span></span><span class=line><span class=cl>    call  setbank0000_8k
+</span></span></code></pre></td></tr></table></div></div><p>Here we store the current page in use by bank #0, preserve register A, extract the page index from the top bits of H, and map the corresponding page.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    ld    a, h
+</span></span><span class=line><span class=cl>    and   %00011111
+</span></span><span class=line><span class=cl>    ld    h, a
+</span></span></code></pre></td></tr></table></div></div><p>his ensures that only the lower 13 bits of HL remain — the actual function address.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    pop   af
+</span></span><span class=line><span class=cl>    call  Call_hl
+</span></span></code></pre></td></tr></table></div></div><p>After restoring register A, we call Call_hl, which is a simple jp (hl) — effectively acting as a call (hl) pseudo-opcode.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    pop   hl
+</span></span><span class=line><span class=cl>    jp    setbanks0000_hl
+</span></span></code></pre></td></tr></table></div></div><p>Finally, we restore the original bank to slot #0 and return execution to the next instruction (call CleanData in the example).</p><h2 id=example-of-equivalent-inline-bank-switch>Example of Equivalent Inline Bank Switch</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>    ld    a, (SLOT_0000)
+</span></span><span class=line><span class=cl>    push  af
+</span></span><span class=line><span class=cl>    ld    a, $00
+</span></span><span class=line><span class=cl>    call  setbank0000_8k
+</span></span><span class=line><span class=cl>    ;
+</span></span><span class=line><span class=cl>    ; routine code
+</span></span><span class=line><span class=cl>    ;
+</span></span><span class=line><span class=cl>    pop   af
+</span></span><span class=line><span class=cl>    call  setbank0000_8k
+</span></span><span class=line><span class=cl>    ret
+</span></span></code></pre></td></tr></table></div></div><h2 id=performance-notes>Performance Notes</h2><div class=table-wrapper><table><thead><tr><th>Call Type</th><th>Size</th><th>T-States</th></tr></thead><tbody><tr><td>ProxyCall</td><td>31 bytes</td><td>167 t-states</td></tr><tr><td>Regular call</td><td>14 bytes</td><td>85 t-states</td></tr></tbody></table></div><p>The proxy adds roughly 82 extra t-states but saves 11 bytes per function, which is a reasonable trade-off for infrequently called routines.</p><hr><h2 id=closing-thoughts>Closing Thoughts</h2><p>This proxy-based approach adds flexibility for managing large engines that exceed 8 KB while keeping the main memory footprint small. Although not ideal for performance-critical routines, it’s a clean and modular way to access code spread across multiple pages — an elegant solution for large Z80 projects like the Spectrum Next.</p></section><footer class="article-meta article-footer"><section class=article-tags><a href=/tags/development/>Development</a></section><section class="article-copyright inline-meta"><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under <a class=link href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank rel=noopener>CC BY-NC-SA 4.0</a></span></section></footer></article><aside><h2 class=section-title>Related content</h2><div class=subsection-list><div class=article-list--tile><article class=has-image><a href=/p/development-environment/><div class=article-image><img alt="Featured image of post My developmen environment" height=150 loading=lazy src=/p/development-environment/cover_hu_a665bbe4f62dead6.jpg srcset="/p/development-environment/cover_hu_a665bbe4f62dead6.jpg 1x, /p/development-environment/cover_hu_8ae62c66b664abb9.jpg 2x" width=250></div><div class=article-details style="background:linear-gradient(0deg,#b4a54c80 0%,#0d264aC0 100%)"><h2 class=article-title>My developmen environment</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2026 Bapa</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=4.0.3>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><script type=module>
     import gallery from '\/ts\/gallery.js';
 
     const articleContent = document.querySelector('.article-content');
@@ -730,15 +172,4 @@
         });
         lightbox.init();
     }
-</script>
-
-    
-
-            </main>
-        </div>
-        
-<script type="text/javascript" src="/ts/main.0658544dcc8bc70eb8a106c6d91844d291fc81de289cf6b6ee474745a7e64da4.js" defer></script>
-
-
-    </body>
-</html>
+</script></main></div><script type=text/javascript src=/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js defer></script></body></html>

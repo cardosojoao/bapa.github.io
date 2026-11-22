@@ -6,7 +6,6 @@ favicon        = "img/avatar.png"
     since = 2020
 
 [sidebar]
-    emoji    = "✏️"
     subtitle = "ZX Spectrum Next game development, dot8, and Tidal Quest."
     avatar   = "img/avatar.png"
 
@@ -29,11 +28,5 @@ favicon        = "img/avatar.png"
     enabled  = false
     provider = ""
 
-# GDPR Cookie Consent Configuration
-# When enabled, analytics and functional cookies require user consent
 [cookies]
     enabled = false
-
-    [cookies.categories]
-        analytics  = true
-        functional = true
